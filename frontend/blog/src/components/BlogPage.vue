@@ -3,7 +3,7 @@
     <post-blog />
     <h1 @click="seeBlogs()">see blogs</h1>
     <div v-for="blog in blogs" :key="blog[1]">
-      <p>{{blog[2]}}</p>
+      <p>{{ blog[2] }}</p>
       <div>
         <update-blog :blog_id="blog[1]" />
         <delete-blog :blog_id="blog[1]" />
@@ -22,30 +22,33 @@ export default {
   components: {
     UpdateBlog,
     DeleteBlog,
-    PostBlog
+    PostBlog,
   },
 
   data() {
     return {
-      blogs: []
+      blogs: [],
     };
   },
   methods: {
-    seeBlogs: function() {
+    seeBlogs: function () {
       axios
         .request({
           url: "https://jayblogpost.ml/api/blog",
-          method: "GET"
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+          },
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           this.blogs = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
